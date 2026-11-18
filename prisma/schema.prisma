@@ -6,22 +6,23 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Patient {
   id        String   @id @default(uuid())
-  mrn       String    @unique
+  mrn       String   @unique
   firstName String
   lastName  String
   dob       DateTime
-  gender    String    // Male, Female, Other
+  gender    String   // Male, Female, Other
   phone     String
   email     String?
-  status    String    @default("Active") // Active, Inactive
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  status    String   @default("Active") // Active, Inactive
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   appointments Appointment[]
 }
@@ -29,14 +30,14 @@ model Patient {
 model Appointment {
   id          String   @id @default(uuid())
   patientId   String
-  patient     Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patient     Patient  @relation(fields: [patientId], references: [id], onDelete: Cascade)
   doctorName  String
   date        DateTime
   startTime   String
   endTime     String
   tokenNumber String
-  priority    String    @default("Normal") // Normal, Urgent
-  status      String    @default("Scheduled") // Scheduled, Waiting, Checked In, In Consult, Completed
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  priority    String   @default("Normal") // Normal, Urgent
+  status      String   @default("Scheduled") // Scheduled, Waiting, Checked In, In Consult, Completed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
