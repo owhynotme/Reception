@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Calendar, Plus } from 'lucide-react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Link from 'next/link';
 
 interface Appointment {
